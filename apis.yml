@@ -1,7 +1,24 @@
 aid: profitero
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/profitero.png
 name: Profitero
-description: Profitero is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: Profitero is an eCommerce data and technology platform (Profitero+) that helps consumer brands
+  optimize their digital shelf presence across major retailers such as Amazon and Walmart. It combines
+  digital shelf analytics, retail media management, content optimization, and managed services to help
+  brands measure and grow online sales, monitoring more than 1,400 retailer sites across 15 commerce hubs
+  for over 9,000 global brands. Profitero was surfaced as a portfolio company of Seedcamp and added to the
+  API Evangelist network. As of this enrichment pass the company publishes no public developer API,
+  developer portal, or SDK surface.
 url: https://raw.githubusercontent.com/api-evangelist/profitero/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +28,15 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
+- eCommerce
+- Digital Shelf
+- Retail Analytics
+- Retail Media
+- Consumer Brands
+- Marketing Analytics
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -22,4 +45,17 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: http://profitero.com
+  url: https://www.profitero.com
+- type: Blog
+  url: https://www.profitero.com/blog
+- type: Support
+  url: https://www.profitero.com/contact
+- type: PrivacyPolicy
+  url: https://www.profitero.com/privacy-policy
+- type: DomainSecurity
+  url: security/profitero-domain-security.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: minimal
+  artifacts_added: 1
+  pass: local-v1
