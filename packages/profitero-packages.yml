@@ -1,0 +1,76 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  registry.npmjs.org search + pypi.org/pypi/profitero/json + rubygems.org/api/v1/gems/profitero.json
+  + crates.io/api/v1/crates?q=profitero + packagist.org/search.json?q=profitero
+  + azuresearch-usnc.nuget.org/query?q=profitero + proxy.golang.org
+  + https://github.com/profitero (public repository listing)
+note: >-
+  Profitero publishes NO client libraries or SDKs on any public package registry.
+  Every registry was queried unauthenticated and returned zero first-party results.
+  The company's GitHub organisation, https://github.com/profitero, exists (HTTP 200,
+  titled "Profitero") but contains exactly ONE public repository — `fastimage`, which
+  is a FORK of sdsykes/fastimage, a third-party Ruby image-dimension gem. It is not a
+  Profitero client library and it is not published to RubyGems under Profitero's name
+  (the canonical `fastimage` gem, v2.4.1 published 2026-03-10, belongs to sdsykes).
+  No `type: SDKs` pointer is emitted in apis.yml, because there is no SDK: Profitero
+  ships no public API for an SDK to wrap, and crediting a third-party fork as an SDK
+  would assert a client surface the company does not publish.
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=profitero
+  result: 0 results
+- registry: pypi
+  query: https://pypi.org/pypi/profitero/json
+  status: 404
+  result: none
+- registry: rubygems
+  query: https://rubygems.org/api/v1/gems/profitero.json
+  status: 404
+  result: none
+- registry: crates.io
+  query: https://crates.io/api/v1/crates?q=profitero
+  result: 0 results
+- registry: packagist
+  query: https://packagist.org/search.json?q=profitero
+  result: 0 first-party results (only unrelated `profitroom/*` packages)
+- registry: nuget
+  query: https://azuresearch-usnc.nuget.org/query?q=profitero
+  result: 0 totalHits
+- registry: pkg.go.dev
+  query: https://proxy.golang.org/github.com/profitero/@v/list
+  status: 404
+  result: none
+- registry: maven-central
+  query: https://search.maven.org/solrsearch/select?q=profitero
+  result: no answer from the search endpoint; no Profitero groupId is known
+sdk_count: 0
+package_count: 0
+packages: []
+github:
+  org: https://github.com/profitero
+  status: 200
+  public_repository_count: 1
+  first_party_repository_count: 0
+  repositories:
+  - name: fastimage
+    url: https://github.com/profitero/fastimage
+    fork: true
+    upstream: https://github.com/sdsykes/fastimage
+    language: Ruby
+    official: false
+    is_api_client: false
+    version: null
+    published: null
+    note: >-
+      A fork of a third-party Ruby gem that reads image dimensions from a URI without
+      downloading the whole file. Not a Profitero client library; no Profitero-namespaced
+      release exists on RubyGems, so there is no registry metadata endpoint to read a
+      version or publication date from. Recorded as null, meaning checked and nothing
+      to record.
+decay:
+  newest_release: null
+  finding: >-
+    There is no first-party release history to decay. Profitero has never published a
+    client library to any public registry, so the strongest abandonment signal this
+    pipeline collects is simply unavailable here — an absence, not a stale artifact.

@@ -1,0 +1,55 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://www.profitero.com/ (site search for "api"), https://www.profitero.com/open-commerce-ecosystem,
+  https://www.profitero.com/blog/2020-09-why-we-launched-an-open-commerce-ecosystem-qa-with-profitero-ceo-bryan-wiener
+limit_count: 0
+limits: []
+note: >-
+  Profitero publishes no API rate limits, because it publishes no API reference.
+  An API demonstrably EXISTS — Profitero's own CEO says so on the company blog:
+  "Technology partners, like Kenshoo and Pacvue, will be able to integrate directly
+  with Profitero via API and use the data to power their ad buying algorithms and
+  software", and "We will also consider providing API access to agencies in Q4"
+  (Bryan Wiener, Open Commerce Ecosystem Q&A, 2020-09-09, HTTP 200). But no base URL,
+  authentication model, operation list, quota, window, burst allowance, response
+  header or exhaustion status code for it is published on any public host.
+  Contract discovery was run against every reachable host: api.profitero.com,
+  developer.profitero.com and developers.profitero.com do not resolve (NXDOMAIN);
+  www.profitero.com hard-404s /openapi.json, /swagger.json, /api-docs, /graphql, /mcp
+  and /llms.txt; app.profitero.com 301s every path to /login.html; sso.profitero.com
+  is an SPA catch-all that answers 200 with the same 450-byte shell for every path;
+  docs.profitero.com 302s to an internal Google Drive workspace; and
+  help.profitero.com is a PRIVATE Zendesk Help Center whose article API returns
+  HTTP 401 "Couldn't authenticate you".
+  Recorded as an honest zero, not an omission.
+headers:
+  documented: false
+  observed: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After signalling could be observed. There
+    is no unauthenticated API endpoint on any profitero.com host against which to
+    observe a runtime signal.
+exhaustion_status: null
+probes:
+- url: https://www.profitero.com/openapi.json
+  status: 404
+  result: miss
+- url: https://www.profitero.com/api-docs
+  status: 404
+  result: miss
+- url: https://www.profitero.com/graphql
+  status: 404
+  result: miss
+- url: https://app.profitero.com/api-docs
+  status: 301
+  result: redirects to /login.html
+- url: https://app.profitero.com/graphql
+  status: 301
+  result: redirects to /login.html
+- url: https://help.profitero.com/api/v2/help_center/en-us/articles.json
+  status: 401
+  result: private Zendesk Help Center
+- url: http://docs.profitero.com/
+  status: 302
+  result: redirects to https://drive.google.com/a/profitero.com (internal Workspace Drive)

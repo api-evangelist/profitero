@@ -1,0 +1,50 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.profitero.com/
+fetched: '2026-08-12'
+plan_count: 0
+plans: []
+note: >-
+  Profitero publishes NO pricing of any kind. There is no pricing page:
+  https://www.profitero.com/pricing returns HTTP 404, and the word "pricing" does not
+  appear as a navigation item anywhere on the site. The company's 435-URL sitemap
+  (https://www.profitero.com/sitemap.xml, HTTP 200) contains no /pricing, /plans,
+  /packages or /editions path.
+  The commercial motion is entirely enterprise sales: every product and solution page
+  terminates in "Request a demo" (https://www.profitero.com/request-a-demo, HTTP 200)
+  or "Let's chat", and the Profitero+ platform is sold to consumer brands under an
+  annual agreement negotiated with a salesperson. There are no self-serve tiers, no
+  published list prices, no free tier and no trial.
+  This is recorded as an honest zero rather than an omission: plan_count 0 means
+  "checked, the provider publishes nothing", which is a different fact from "not
+  checked".
+  Consequently there is also no published API entitlement. Where peers name "API
+  access" as a paid tier feature, Profitero does not — the only public statement the
+  company makes about having an API is editorial (see rate-limits/ and the CEO Q&A
+  cited in x-coverage), not commercial.
+pricing_model: enterprise-negotiated
+self_serve: false
+free_tier: false
+trial:
+  available: false
+  note: No free trial is advertised. The entry point is a sales demo request.
+currency: null
+billing_period: null
+overage:
+  documented: false
+  note: No quotas, overage schedule or metered units are published.
+api_entitlement:
+  documented: false
+  note: >-
+    No tier, add-on or line item naming API access is published anywhere on the public
+    estate.
+probes:
+- url: https://www.profitero.com/pricing
+  status: 404
+  result: no pricing page
+- url: https://www.profitero.com/request-a-demo
+  status: 200
+  result: sales-demo request form stands in for pricing
+- url: https://www.profitero.com/sitemap.xml
+  status: 200
+  result: 435 URLs, none of them a pricing or plans page

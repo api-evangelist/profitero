@@ -1,0 +1,234 @@
+generated: '2026-08-12'
+method: probed
+source: live GET probes of /.well-known/* on every reachable profitero.com host
+note: >-
+  Nothing was found. Every /.well-known/* path on www.profitero.com returns a hard
+  HTTP 404 (the site runs on Webflow, which 404s correctly rather than soft-404ing —
+  /terms, /pricing and /security all return 404 as well, so a 404 here is a real
+  absence and a 200 would be a real document).
+  Two hosts produce misleading responses and are recorded as MISSES, not hits:
+  app.profitero.com answers HTTP 301 to /login.html for most paths (and HTTP 500 for
+  the rest) because the whole application is gated; sso.profitero.com is a
+  single-page-app catch-all that answers HTTP 200 with the SAME ~450-byte HTML shell
+  (<title>Authentication</title>, <div id="root">) for EVERY path, including
+  /openapi.json and /.well-known/agent-card.json. Those 200s are the classic SPA
+  catch-all false positive and carry no document.
+  No WellKnown, SecurityTxt, APICatalog or AgentCard pointer is emitted in apis.yml
+  as a result — a recorded absence is data, but it is not a presence.
+hosts:
+- host: www.profitero.com
+  platform: Webflow marketing site
+  soft_404: false
+  soft_404_evidence: 'Unknown paths return a real HTTP 404 (verified: /terms 404, /pricing 404, /llms.txt 404)'
+  paths:
+  - path: /.well-known/security.txt
+    url: https://www.profitero.com/.well-known/security.txt
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/openid-configuration
+    url: https://www.profitero.com/.well-known/openid-configuration
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    url: https://www.profitero.com/.well-known/oauth-authorization-server
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    url: https://www.profitero.com/.well-known/oauth-protected-resource
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/api-catalog
+    url: https://www.profitero.com/.well-known/api-catalog
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/ai-plugin.json
+    url: https://www.profitero.com/.well-known/ai-plugin.json
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/agent-card.json
+    url: https://www.profitero.com/.well-known/agent-card.json
+    status: 404
+    result: miss
+    file: null
+  - path: /.well-known/agent.json
+    url: https://www.profitero.com/.well-known/agent.json
+    status: 404
+    result: miss
+    file: null
+- host: app.profitero.com
+  platform: Profitero+ application (gated)
+  soft_404: false
+  note: >-
+    Every path redirects (HTTP 301) to /login.html, or returns HTTP 500 from the
+    origin. Nothing is served to an anonymous client.
+  paths:
+  - path: /.well-known/security.txt
+    url: https://app.profitero.com/.well-known/security.txt
+    status: 301
+    redirect_to: /login.html
+    result: miss
+    reason: gated - redirects to login
+    file: null
+  - path: /.well-known/openid-configuration
+    url: https://app.profitero.com/.well-known/openid-configuration
+    status: 301
+    redirect_to: /login.html
+    result: miss
+    reason: gated - redirects to login
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    url: https://app.profitero.com/.well-known/oauth-authorization-server
+    status: 301
+    redirect_to: /login.html
+    result: miss
+    reason: gated - redirects to login
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    url: https://app.profitero.com/.well-known/oauth-protected-resource
+    status: 301
+    redirect_to: /login.html
+    result: miss
+    reason: gated - redirects to login
+    file: null
+  - path: /.well-known/api-catalog
+    url: https://app.profitero.com/.well-known/api-catalog
+    status: 301
+    redirect_to: /login.html
+    result: miss
+    reason: gated - redirects to login
+    file: null
+  - path: /.well-known/ai-plugin.json
+    url: https://app.profitero.com/.well-known/ai-plugin.json
+    status: 500
+    result: miss
+    reason: origin error
+    file: null
+  - path: /.well-known/agent-card.json
+    url: https://app.profitero.com/.well-known/agent-card.json
+    status: 500
+    result: miss
+    reason: origin error, not an AgentCard
+    file: null
+  - path: /.well-known/agent.json
+    url: https://app.profitero.com/.well-known/agent.json
+    status: 500
+    result: miss
+    reason: origin error, not an AgentCard
+    file: null
+- host: sso.profitero.com
+  platform: Profitero single sign-on SPA
+  soft_404: true
+  soft_404_evidence: >-
+    HTTP 200, Content-Type text/html, 450 bytes, identical shell for every path —
+    <title>Authentication</title>, <div id="root"></div>, <script src="/main.js">.
+    A client-side router catch-all, not a document server.
+  paths:
+  - path: /.well-known/security.txt
+    url: https://sso.profitero.com/.well-known/security.txt
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not a document
+    file: null
+  - path: /.well-known/openid-configuration
+    url: https://sso.profitero.com/.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not a document
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    url: https://sso.profitero.com/.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not a document
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    url: https://sso.profitero.com/.well-known/oauth-protected-resource
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not a document
+    file: null
+  - path: /.well-known/api-catalog
+    url: https://sso.profitero.com/.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not a document
+    file: null
+  - path: /.well-known/ai-plugin.json
+    url: https://sso.profitero.com/.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not a document
+    file: null
+  - path: /.well-known/agent-card.json
+    url: https://sso.profitero.com/.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not an AgentCard
+    file: null
+  - path: /.well-known/agent.json
+    url: https://sso.profitero.com/.well-known/agent.json
+    status: 200
+    content_type: text/html
+    bytes: 450
+    result: miss
+    reason: SPA catch-all HTML shell, not an AgentCard
+    file: null
+- host: 3precovery.profitero.com
+  platform: WordPress microsite for "Recovery by Profitero"
+  soft_404: false
+  paths:
+  - path: /.well-known/agent-card.json
+    url: https://3precovery.profitero.com/.well-known/agent-card.json
+    status: 404
+    result: miss
+    file: null
+hosts_not_reachable:
+- host: api.profitero.com
+  result: NXDOMAIN - does not resolve
+- host: developer.profitero.com
+  result: NXDOMAIN - does not resolve
+- host: developers.profitero.com
+  result: NXDOMAIN - does not resolve
+- host: status.profitero.com
+  result: NXDOMAIN - does not resolve
+- host: trust.profitero.com
+  result: NXDOMAIN - does not resolve
+- host: docs.profitero.com
+  result: >-
+    Resolves (CNAME ghs.google.com) but is NOT a documentation host - HTTP 302 to
+    https://drive.google.com/a/profitero.com, i.e. an internal Google Workspace
+    Drive alias for employees.
+- host: help.profitero.com
+  result: >-
+    Resolves to profiterohelp.zendesk.com. The Zendesk Help Center is private:
+    /api/v2/help_center/en-us/articles.json returns HTTP 401
+    {"error":"Couldn't authenticate you"} and the web UI returns an HTTP 403
+    Cloudflare challenge to an anonymous client.
+summary:
+  hosts_probed: 4
+  paths_probed: 25
+  real_documents: 0
+  security_txt: false
+  agent_card: false
+  api_catalog: false
+  openid_configuration: false
